@@ -1,5 +1,3 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -14,13 +12,52 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import departments from '@/routes/departments';
+import employees from '@/routes/employees';
+import projects from '@/routes/projects';
+import roles from '@/routes/roles';
+import tasks from '@/routes/tasks';
 import type { NavItem } from '@/types';
+import { Link } from '@inertiajs/react';
+import {
+    BookOpen,
+    ChartNoAxesGantt,
+    FolderGit2,
+    KeyRound,
+    LayoutGrid,
+    Users,
+} from 'lucide-react';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Employees',
+        href: employees.index(),
+        icon: Users,
+    },
+    {
+        title: 'Projects',
+        href: projects.index(),
+        icon: ChartNoAxesGantt,
+    },
+    {
+        title: 'Tasks',
+        href: tasks.index(),
+        icon: ChartNoAxesGantt,
+    },
+    {
+        title: 'Departments',
+        href: departments.index(),
+        icon: KeyRound,
+    },
+    {
+        title: 'Roles',
+        href: roles.index(),
+        icon: KeyRound,
     },
 ];
 

@@ -58,17 +58,27 @@ export default function Index({ employees }: Props) {
                 <table className="w-full border-collapse border border-gray-200">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="border p-2 text-left">
+                            <th className="border bg-black p-2 text-left">
                                 Employee ID
                             </th>
-                            <th className="border p-2 text-left">Name</th>
-                            <th className="border p-2 text-left">Department</th>
-                            <th className="border p-2 text-left">Position</th>
-                            <th className="border p-2 text-left">Status</th>
-                            <th className="border p-2 text-left">
+                            <th className="border bg-black p-2 text-left">
+                                Name
+                            </th>
+                            <th className="border bg-black p-2 text-left">
+                                Department
+                            </th>
+                            <th className="border bg-black p-2 text-left">
+                                Position
+                            </th>
+                            <th className="border bg-black p-2 text-left">
+                                Status
+                            </th>
+                            <th className="border bg-black p-2 text-left">
                                 Has Account
                             </th>
-                            <th className="border p-2 text-left">Actions</th>
+                            <th className="border bg-black p-2 text-left">
+                                Actions
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

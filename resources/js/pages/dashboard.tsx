@@ -1,8 +1,11 @@
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
+    const { auth } = usePage().props;
+
+    console.log(usePage());
     return (
         <>
             <Head title="Dashboard" />

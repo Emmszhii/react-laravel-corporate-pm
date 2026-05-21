@@ -40,12 +40,18 @@ export default function Index({ roles }: Props) {
                 <table className="w-full border-collapse border">
                     <thead>
                         <tr className="bg-gray-100">
-                            <th className="border p-3 text-left">Role Name</th>
-                            <th className="border p-3 text-left">
+                            <th className="border bg-black p-3 text-left">
+                                Role Name
+                            </th>
+                            <th className="border bg-black p-3 text-left">
                                 Permissions
                             </th>
-                            <th className="border p-3 text-left">Users</th>
-                            <th className="border p-3 text-left">Actions</th>
+                            <th className="border bg-black p-3 text-left">
+                                Users
+                            </th>
+                            <th className="border bg-black p-3 text-left">
+                                Actions
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

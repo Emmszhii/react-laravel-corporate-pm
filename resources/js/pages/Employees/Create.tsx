@@ -255,7 +255,7 @@ export default function Create({ departments, availableUsers }: Props) {
                         <button
                             type="submit"
                             disabled={processing}
-                            className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+                            // className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
                         >
                             Create Employee
                         </button>

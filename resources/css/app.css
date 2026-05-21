@@ -136,8 +136,17 @@
     * {
         @apply border-border;
     }
-
     body {
         @apply bg-background text-foreground;
+    }
+    button {
+        @apply cursor-pointer rounded px-6 py-2 text-white disabled:opacity-50;
+    }
+    button[type='submit'],
+    button.primary {
+        @apply bg-blue-600 hover:bg-blue-700;
+    }
+    option {
+        @apply bg-black text-white;
     }
 }

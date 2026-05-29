@@ -33,15 +33,31 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
+    // public function share(Request $request): array
+    // {
+    //     return [
+    //         ...parent::share($request),
+    //         'name' => config('app.name'),
+    //         'auth' => [
+    //             'user' => $request->user(),
+    //         ],
+    //         'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+    //     ];
+    // }
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-        ];
+        return array_merge(parent::share($request), [
+            // Share the authenticated user's permissions, roles, and employee data
+            'auth.user' => fn() => $request->user()
+                ? [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    'permissions' => $request->user()->getAllPermissions()->pluck('name')->toArray(),
+                    'roles' => $request->user()->getRoleNames()->toArray(),
+                    'employee' => $request->user()->employee,
+                ]
+                : null,
+        ]);
     }
 }

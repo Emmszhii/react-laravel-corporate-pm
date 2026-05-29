@@ -17,6 +17,7 @@ import employees from '@/routes/employees';
 import projects from '@/routes/projects';
 import roles from '@/routes/roles';
 import tasks from '@/routes/tasks';
+import users from '@/routes/users';
 import type { NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import {
@@ -52,6 +53,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Departments',
         href: departments.index(),
+        icon: KeyRound,
+    },
+    {
+        title: 'Users',
+        href: users.index(),
         icon: KeyRound,
     },
     {

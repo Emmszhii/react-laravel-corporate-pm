@@ -9,56 +9,64 @@ use App\Models\Employee;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Support\Facades\Route; 
+use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
 
-Route::get('/dashboard',function(){
+Route::get('/dashboard', function () {
     $user = auth()->user();
-    $props = ['role'=>'employee'];
-    if($user->hasRole('admin')){
+    $props = ['role' => 'employee'];
+    if ($user->hasRole('admin')) {
         $props = [
-            'role'=>'admin',
-            'stats'=> [
+            'role' => 'admin',
+            'stats' => [
                 'totalProjects' => Project::count(),
                 'totalTasks' => Task::count(),
                 'totalEmployees' => Employee::count(),
                 'totalUsersWithoutEmployee' => User::whereDoesntHave('employee')->count(),
             ],
         ];
-    }elseif ($user->hasRole('manager')){
+    } elseif ($user->hasRole('manager')) {
         $departmentId = $user->employee?->department_id;
         $props = [
             'role' => 'manager',
-            'departmentProjects' => Project::where('department_id', $departmentId)->get(['id','title','status']),
-            'pendingTasks' => Task::whereHas('project', fn($q)=>$q->where('department_id', $departmentId))->where('status','pending')->get(['id','title','due_date']),
+            'departmentProjects' => Project::where('department_id', $departmentId)->get(['id', 'title', 'status']),
+            'pendingTasks' => Task::whereHas('project', fn($q) => $q->where('department_id', $departmentId))->where('status', 'pending')->get(['id', 'title', 'due_date']),
         ];
-    }else{
+    } else {
         $employeeId = $user->employee?->id;
         $props = [
             'role' => 'employee',
-            'myTasks' => Task::where('assigned_to_meployee_id', $employeeId)->get(['id','title','status','due_date']),
+            'myTasks' => Task::where('assigned_to_meployee_id', $employeeId)->get(['id', 'title', 'status', 'due_date']),
             'upcomingDeadlines' => Task::where('assigned_to_employee_id', $employeeId)
-                        ->whereNotNull('due_date')
-                        ->where('due_date', '=>', now())
-                        ->orderBy('due_date')
-                        ->limit(5)
-                        ->get(['id','title','due_date'])
+                ->whereNotNull('due_date')
+                ->where('due_date', '=>', now())
+                ->orderBy('due_date')
+                ->limit(5)
+                ->get(['id', 'title', 'due_date'])
         ];
     };
     return Inertia\Inertia::render('Dashboard', $props);
-})->middleware(['auth','verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+// User account management routes (admin only)
+Route::middleware(['auth', 'permission:manage users'])->group(function () {
+    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+});
 // Role management routes - restricted to users with manage roles permissions
-Route::middleware(['auth','permission:manage roles'])->group(function(){
+Route::middleware(['auth', 'permission:manage roles'])->group(function () {
     Route::resource('roles', RoleController::class)->except(['show']);
 });
 // Employee CRUD routes - all require auth
 Route::resource('employees', EmployeeController::class)->middleware('auth');
 // Department routes - viewable by all, but create/edit/edit/delete restricted to admins
-Route::resource('departments',DepartmentController::class)->only(['index'])->middleware(['auth']);
-Route::resource('departments',DepartmentController::class)->except(['index','show'])->middleware(['auth','permission:manage departments']);
-Route::resource('departments', DepartmentController::class)->middleware('auth'); 
-Route::resource('projects', ProjectController::class)->middleware('auth'); 
+Route::resource('departments', DepartmentController::class)->only(['index'])->middleware(['auth']);
+Route::resource('departments', DepartmentController::class)->except(['index', 'show'])->middleware(['auth', 'permission:manage departments']);
+Route::resource('departments', DepartmentController::class)->middleware('auth');
+Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::resource('tasks', TaskController::class)->only(['index'])->middleware(['auth']);
 Route::resource('tasks', TaskController::class)
     ->middleware(['auth', 'verified'])

@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class DepartmentController extends Controller
+class DepartmentController extends Controller implements HasMiddleware
 {
+    // IMPLEMENT ROLED BASED ACCESS CONTROL
+    public static function middleware(): array
+    {
+        return [new Middleware('permission:manage department', only: ['index', 'create', 'store', 'edit', 'update', 'destroy'])];
+    }
+
     // List all departments with employee count and head employee name
     public function index()
     {

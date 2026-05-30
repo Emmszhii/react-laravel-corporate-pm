@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Models\User;
@@ -9,8 +11,26 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class EmployeeController extends Controller
+// class EmployeeController extends Controller implements HasMiddleware
+// {
+//     public static function middleware(): array
+//     {
+//         return [
+//             new Middleware('permission:manage employees', only: ['create', 'store', 'edit', 'update', 'destroy']),
+//         ];
+//     }
+
+//     // ... rest of your existing methods stay the same
+// }
+
+class EmployeeController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:manage employees', only: ['index', 'create', 'store', 'edit', 'update', 'destroy']),
+        ];
+    }
     // Display a paginated list of all employees
     public function index(): Response
     {

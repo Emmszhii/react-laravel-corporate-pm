@@ -39,11 +39,13 @@ const mainNavItems: NavItem[] = [
         title: 'Employees',
         href: employees.index(),
         icon: Users,
+        permission: 'view employees',
     },
     {
         title: 'Projects',
         href: projects.index(),
         icon: ChartNoAxesGantt,
+        permission: 'view projects',
     },
     {
         title: 'Tasks',
@@ -54,16 +56,19 @@ const mainNavItems: NavItem[] = [
         title: 'Departments',
         href: departments.index(),
         icon: KeyRound,
+        permission: 'view departments',
     },
     {
         title: 'Users',
         href: users.index(),
         icon: KeyRound,
+        permission: 'view users',
     },
     {
         title: 'Roles',
         href: roles.index(),
         icon: KeyRound,
+        permission: 'view roles',
     },
 ];
 

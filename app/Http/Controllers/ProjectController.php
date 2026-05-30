@@ -31,7 +31,7 @@ class ProjectController extends Controller
             $employeeId = $user->employee?->id;
             $projects = Project::with('department:id,name')
                 ->whereHas('employees', function ($query) use ($employeeId) {
-                    $query->where('employee_id', $employeeId);
+                    $query->where('project_employee.employee_id', $employeeId);
                 })
                 ->get();
         }

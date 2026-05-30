@@ -61,10 +61,10 @@ Route::middleware(['auth', 'permission:manage roles'])->group(function () {
     Route::resource('roles', RoleController::class)->except(['show']);
 });
 // Employee CRUD routes - all require auth
-Route::resource('employees', EmployeeController::class)->middleware('auth');
-// Department routes - viewable by all, but create/edit/edit/delete restricted to admins
-Route::resource('departments', DepartmentController::class)->only(['index'])->middleware(['auth']);
-Route::resource('departments', DepartmentController::class)->except(['index', 'show'])->middleware(['auth', 'permission:manage departments']);
+Route::resource('employees', EmployeeController::class)->middleware(['auth']);
+// Department routes 
+Route::resource('departments', DepartmentController::class)->middleware(['auth']);
+// Route::resource('departments', DepartmentController::class)->except(['index', 'show'])->middleware(['auth', 'permission:manage departments']);
 Route::resource('departments', DepartmentController::class)->middleware('auth');
 Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::resource('tasks', TaskController::class)->only(['index'])->middleware(['auth']);

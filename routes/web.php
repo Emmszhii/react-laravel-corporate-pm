@@ -65,7 +65,6 @@ Route::resource('employees', EmployeeController::class)->middleware(['auth']);
 // Department routes 
 Route::resource('departments', DepartmentController::class)->middleware(['auth']);
 // Route::resource('departments', DepartmentController::class)->except(['index', 'show'])->middleware(['auth', 'permission:manage departments']);
-Route::resource('departments', DepartmentController::class)->middleware('auth');
 Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::resource('tasks', TaskController::class)->only(['index'])->middleware(['auth']);
 Route::resource('tasks', TaskController::class)

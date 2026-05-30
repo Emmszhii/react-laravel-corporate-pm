@@ -51,24 +51,25 @@ const mainNavItems: NavItem[] = [
         title: 'Tasks',
         href: tasks.index(),
         icon: ChartNoAxesGantt,
+        permission: 'view tasks',
     },
     {
         title: 'Departments',
         href: departments.index(),
         icon: KeyRound,
-        permission: 'view departments',
+        permission: 'manage departments',
     },
     {
         title: 'Users',
         href: users.index(),
         icon: KeyRound,
-        permission: 'view users',
+        permission: 'manage users',
     },
     {
         title: 'Roles',
         href: roles.index(),
         icon: KeyRound,
-        permission: 'view roles',
+        permission: 'manage roles',
     },
 ];
 

@@ -14,7 +14,7 @@ class DepartmentController extends Controller implements HasMiddleware
     // IMPLEMENT ROLED BASED ACCESS CONTROL
     public static function middleware(): array
     {
-        return [new Middleware('permission:manage department', only: ['index', 'create', 'store', 'edit', 'update', 'destroy'])];
+        return [new Middleware('permission:manage departments', only: ['index', 'create', 'store', 'edit', 'update', 'destroy'])];
     }
 
     // List all departments with employee count and head employee name

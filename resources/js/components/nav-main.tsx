@@ -13,6 +13,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
     const { isCurrentUrl } = useCurrentUrl();
     const { auth } = usePage().props;
     const arrayPermission = auth.user.permissions;
+    console.log(arrayPermission);
 
     return (
         <SidebarGroup className="px-2 py-0">
@@ -20,6 +21,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
             <SidebarMenu>
                 {items.map((item) => {
                     if (
+                        item.permission &&
                         !arrayPermission.find((val) => val == item.permission)
                     ) {
                         return;

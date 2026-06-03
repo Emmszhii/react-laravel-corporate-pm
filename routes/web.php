@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
         $employeeId = $user->employee?->id;
         $props = [
             'role' => 'employee',
-            'myTasks' => Task::where('assigned_to_meployee_id', $employeeId)->get(['id', 'title', 'status', 'due_date']),
+            'myTasks' => Task::where('assigned_to_employee_id', $employeeId)->get(['id', 'title', 'status', 'due_date']),
             'upcomingDeadlines' => Task::where('assigned_to_employee_id', $employeeId)
                 ->whereNotNull('due_date')
                 ->where('due_date', '=>', now())

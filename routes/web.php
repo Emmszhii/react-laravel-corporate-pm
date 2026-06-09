@@ -47,7 +47,7 @@ Route::get('/dashboard', function () {
         ];
     };
     return Inertia\Inertia::render('Dashboard', $props);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('Dashboard');
 // User account management routes (admin only)
 Route::middleware(['auth', 'permission:manage users'])->group(function () {
     Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');

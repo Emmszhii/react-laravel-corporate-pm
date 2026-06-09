@@ -28,4 +28,11 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    build: {
+        sourcemap: false,
+        minify: 'esbuild',
+    },
+    optimizeDeps: {
+        include: ['react', 'react-dom'],
+    },
 });

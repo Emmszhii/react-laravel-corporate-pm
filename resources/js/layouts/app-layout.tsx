@@ -1,4 +1,5 @@
 import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
+import { ShapeCaptureProbe } from '@/lib/boneyard/ShapeCaptureProbe';
 import type { BreadcrumbItem } from '@/types';
 
 export default function AppLayout({
@@ -10,7 +11,7 @@ export default function AppLayout({
 }) {
     return (
         <AppLayoutTemplate breadcrumbs={breadcrumbs}>
-            {children}
+            <ShapeCaptureProbe>{children}</ShapeCaptureProbe>
         </AppLayoutTemplate>
     );
 }

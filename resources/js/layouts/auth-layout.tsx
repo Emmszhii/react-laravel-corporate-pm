@@ -1,4 +1,5 @@
 import AuthLayoutTemplate from '@/layouts/auth/auth-simple-layout';
+import { ShapeCaptureProbe } from '@/lib/boneyard/ShapeCaptureProbe';
 
 export default function AuthLayout({
     title = '',
@@ -11,7 +12,7 @@ export default function AuthLayout({
 }) {
     return (
         <AuthLayoutTemplate title={title} description={description}>
-            {children}
+            <ShapeCaptureProbe>{children}</ShapeCaptureProbe>
         </AuthLayoutTemplate>
     );
 }

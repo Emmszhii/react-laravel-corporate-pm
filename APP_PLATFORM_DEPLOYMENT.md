@@ -73,13 +73,42 @@ FILESYSTEM_DISK=local
 
 ## **Troubleshooting**
 
-### **500 Error after Deploy**
+### **500 Error: "Unable to locate file in Vite manifest: resources/js/pages/welcome.tsx"**
+
+**Cause:** The Blade template was trying to load individual page components as separate Vite entry points, but they're bundled into `app.tsx`.
+
+**Fix (Already Applied):**
+- Updated `resources/views/app.blade.php` to only load main entry points:
+```blade
+@vite(['resources/css/app.css', 'resources/js/app.tsx'])
+```
+
+**This was the problem:**
+```blade
+@vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
+```
+
+Individual pages are dynamically imported by React/Inertia, not as separate Vite entries.
+
+### **Build Failed or Missing manifest.json**
+```bash
+# Check if build completed
+doctl apps exec YOUR_APP_ID --component web -- test -f public/build/manifest.json && echo "OK" || echo "MISSING"
+
+# Check build logs
+doctl apps logs YOUR_APP_ID --component web | grep -i "vite\|npm\|build"
+```
+
+### **General Troubleshooting**
 ```bash
 # Check logs
 doctl apps logs YOUR_APP_ID --component web
 
 # Run this if needed
 doctl apps exec YOUR_APP_ID --component web -- php artisan key:generate
+
+# Verify assets loaded
+curl https://your-domain.com | grep -o "public/build"
 ```
 
 ### **Assets Not Loading**

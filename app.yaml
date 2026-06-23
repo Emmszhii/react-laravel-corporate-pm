@@ -8,6 +8,8 @@ services:
     composer install --no-dev --optimize-autoloader && \
     npm ci && \
     npm run build && \
+    test -f public/build/manifest.json || (echo "Build failed: manifest.json not found" && exit 1) && \
+    php artisan migrate --force && \
     php artisan config:clear && \
     php artisan cache:clear && \
     php artisan route:clear && \

@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
+import { boneyardPlugin } from 'boneyard-js/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
                 }),
             ],
         }),
+        boneyardPlugin(),
         inertia(),
         react({
             babel: {

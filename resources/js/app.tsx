@@ -5,8 +5,9 @@ import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import BoneyardPageLoader from '@/components/boneyard-page-loader';
+import '@/bones/registry';
 import { createRoot } from 'react-dom/client';
-import { BoneyardBoundary } from '@/lib/boneyard/BoneyardBoundary';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -34,6 +35,7 @@ createInertiaApp({
     setup({ el, App, props }) {
         createRoot(el).render(
             <TooltipProvider delayDuration={0}>
+                {/* <BoneyardPageLoader /> */}
                 <App {...props} />
                 <Toaster />
             </TooltipProvider>,

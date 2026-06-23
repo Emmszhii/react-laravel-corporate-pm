@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use App\Models\Project;
+use App\Http\Responses\InertiaPageResponse;
 use App\Models\Employee;
+use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class TaskController extends Controller
 {
@@ -40,7 +40,7 @@ class TaskController extends Controller
 
         $tasks = $query->latest()->get();
 
-        return Inertia::render('Tasks/Index', [
+        return InertiaPageResponse::csr('Tasks/Index', [
             'tasks' => $tasks,
             'filters' => $request->only(['status', 'priority']),
         ]);
@@ -49,7 +49,7 @@ class TaskController extends Controller
     // Show the create task form with dropdown data
     public function create()
     {
-        return Inertia::render('Tasks/Create', [
+        return InertiaPageResponse::csr('Tasks/Create', [
             'projects' => Project::all(['id', 'title']),
             'employees' => Employee::all(['id', 'first_name', 'last_name']),
         ]);
@@ -77,7 +77,7 @@ class TaskController extends Controller
     // Show the edit form pre-populated with task data
     public function edit(Task $task)
     {
-        return Inertia::render('Tasks/Edit', [
+        return InertiaPageResponse::csr('Tasks/Edit', [
             'task' => $task->load(['project', 'assignee']),
             'projects' => Project::all(['id', 'title']),
             'employees' => Employee::all(['id', 'first_name', 'last_name']),

@@ -16,7 +16,7 @@ return [
     */
 
     'ssr' => [
-        'enabled' => true,
+        'enabled' => false,  // Disabled by default for CSR on authenticated pages
         'url' => 'http://127.0.0.1:13714',
         // 'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
 

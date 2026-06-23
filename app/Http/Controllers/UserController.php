@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Responses\InertiaPageResponse;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -27,7 +27,7 @@ class UserController extends Controller
                 ];
             });
 
-        return Inertia::render('Users/Index', [
+        return InertiaPageResponse::csr('Users/Index', [
             'users' => $users,
         ]);
     }
@@ -39,7 +39,7 @@ class UserController extends Controller
         // Get employees not yet linked to any user account
         $availableEmployees = Employee::whereNull('user_id')->get();
 
-        return Inertia::render('Users/Create', [
+        return InertiaPageResponse::csr('Users/Create', [
             'roles' => $roles,
             'availableEmployees' => $availableEmployees,
         ]);
@@ -85,7 +85,7 @@ class UserController extends Controller
                 ->orWhere('user_id', $user->id);
         })->get();
 
-        return Inertia::render('Users/Edit', [
+        return InertiaPageResponse::csr('Users/Edit', [
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,

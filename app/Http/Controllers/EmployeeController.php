@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
-use App\Models\Employee;
+use App\Http\Responses\InertiaPageResponse;
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Inertia\Response;
 
 // class EmployeeController extends Controller implements HasMiddleware
@@ -32,18 +32,18 @@ class EmployeeController extends Controller implements HasMiddleware
         ];
     }
     // Display a paginated list of all employees
-    public function index(): Response
+    public function index()
     {
         $employees = Employee::with(['department', 'user'])
             ->paginate(15);
 
-        return Inertia::render('Employees/Index', [
+        return InertiaPageResponse::csr('Employees/Index', [
             'employees' => $employees,
         ]);
     }
 
     // Show the form for creating a new employee
-    public function create(): Response
+    public function create()
     {
         // Get departments for the dropdown
         $departments = Department::all();
@@ -51,7 +51,7 @@ class EmployeeController extends Controller implements HasMiddleware
         // Get users that are not yet linked to any employee
         $availableUsers = User::whereDoesntHave('employee')->get();
 
-        return Inertia::render('Employees/Create', [
+        return InertiaPageResponse::csr('Employees/Create', [
             'departments' => $departments,
             'availableUsers' => $availableUsers,
         ]);
@@ -84,7 +84,7 @@ class EmployeeController extends Controller implements HasMiddleware
     public function show(Employee $employee): Response
     {
         $employee->load(['department', 'user']);
-        return Inertia::render('Employees/Show', [
+        return InertiaPageResponse::csr('Employees/Show', [
             'employee' => $employee,
             // Pass whether current user can see salary
             'canViewSalary' => auth()->user()->hasRole('admin'),
@@ -92,7 +92,7 @@ class EmployeeController extends Controller implements HasMiddleware
     }
 
     // Show the form for editing an existing employee
-    public function edit(Employee $employee): Response
+    public function edit(Employee $employee)
     {
         $departments = Department::all();
 
@@ -102,7 +102,7 @@ class EmployeeController extends Controller implements HasMiddleware
                 ->orWhere('id', $employee->user_id);
         })->get();
 
-        return Inertia::render('Employees/Edit', [
+        return InertiaPageResponse::csr('Employees/Edit', [
             'employee' => $employee,
             'departments' => $departments,
             'availableUsers' => $availableUsers,

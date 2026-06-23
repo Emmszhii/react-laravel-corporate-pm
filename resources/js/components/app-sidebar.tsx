@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { Dashboard } from '@/routes';
+import { dashboard } from '@/routes';
 import departments from '@/routes/departments';
 import employees from '@/routes/employees';
 import projects from '@/routes/projects';
@@ -31,8 +31,8 @@ import {
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: Dashboard(),
+        title: 'dashboard',
+        href: dashboard(),
         icon: LayoutGrid,
     },
     {
@@ -93,7 +93,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={Dashboard()} prefetch>
+                            <Link href={dashboard()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

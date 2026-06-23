@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Http\Responses\InertiaPageResponse;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Project;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
@@ -36,7 +36,7 @@ class ProjectController extends Controller
                 ->get();
         }
 
-        return Inertia::render('Projects/Index', [
+        return InertiaPageResponse::csr('Projects/Index', [
             'projects' => $projects,
         ]);
     }
@@ -47,7 +47,7 @@ class ProjectController extends Controller
         $departments = Department::select('id', 'name')->get();
         $employees = Employee::select('id', 'first_name', 'last_name')->get();
 
-        return Inertia::render('Projects/Create', [
+        return InertiaPageResponse::csr('Projects/Create', [
             'departments' => $departments,
             'employees' => $employees,
         ]);
@@ -82,7 +82,7 @@ class ProjectController extends Controller
     {
         $project->load(['department', 'employees', 'tasks.assignee']);
 
-        return Inertia::render('Projects/Show', [
+        return InertiaPageResponse::csr('Projects/Show', [
             'project' => $project,
         ]);
     }
@@ -94,7 +94,7 @@ class ProjectController extends Controller
         $departments = Department::select('id', 'name')->get();
         $employees = Employee::select('id', 'first_name', 'last_name')->get();
 
-        return Inertia::render('Projects/Edit', [
+        return InertiaPageResponse::csr('Projects/Edit', [
             'project' => $project,
             'departments' => $departments,
             'employees' => $employees,

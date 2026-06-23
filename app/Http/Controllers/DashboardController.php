@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+use App\Http\Responses\InertiaPageResponse;
 use App\Models\Employee;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -46,6 +45,7 @@ class DashboardController extends Controller
                     ->get(['id', 'title', 'due_date'])
             ];
         }
-        return Inertia::render('Dashboard', $props);
+        // Use CSR for authenticated dashboard
+        return InertiaPageResponse::csr('Dashboard', $props);
     }
 }

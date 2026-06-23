@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
+use App\Http\Responses\InertiaPageResponse;
 use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class DepartmentController extends Controller implements HasMiddleware
 {
@@ -24,7 +24,7 @@ class DepartmentController extends Controller implements HasMiddleware
             ->with('headEmployee:id,first_name,last_name')
             ->get();
 
-        return Inertia::render('Departments/Index', [
+        return InertiaPageResponse::csr('Departments/Index', [
             'departments' => $departments,
         ]);
     }
@@ -34,7 +34,7 @@ class DepartmentController extends Controller implements HasMiddleware
     {
         $employees = Employee::select('id', 'first_name', 'last_name')->get();
 
-        return Inertia::render('Departments/Create', [
+        return InertiaPageResponse::csr('Departments/Create', [
             'employees' => $employees,
         ]);
     }
@@ -59,7 +59,7 @@ class DepartmentController extends Controller implements HasMiddleware
     {
         $employees = Employee::select('id', 'first_name', 'last_name')->get();
 
-        return Inertia::render('Departments/Edit', [
+        return InertiaPageResponse::csr('Departments/Edit', [
             'department' => $department,
             'employees' => $employees,
         ]);

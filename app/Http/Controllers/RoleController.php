@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Responses\InertiaPageResponse;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -14,7 +14,7 @@ class RoleController extends Controller
     {
         $roles = Role::withCount(['permissions', 'users'])->get();
 
-        return Inertia::render('Roles/Index', [
+        return InertiaPageResponse::csr('Roles/Index', [
             'roles' => $roles,
         ]);
     }
@@ -24,7 +24,7 @@ class RoleController extends Controller
     {
         $groupedPermissions = $this->getGroupedPermissions();
 
-        return Inertia::render('Roles/Create', [
+        return InertiaPageResponse::csr('Roles/Create', [
             'groupedPermissions' => $groupedPermissions,
         ]);
     }
@@ -49,7 +49,7 @@ class RoleController extends Controller
     {
         $groupedPermissions = $this->getGroupedPermissions();
 
-        return Inertia::render('Roles/Edit', [
+        return InertiaPageResponse::csr('Roles/Edit', [
             'role' => $role->load('permissions'),
             'groupedPermissions' => $groupedPermissions,
         ]);

@@ -5,11 +5,19 @@ import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { createRoot } from 'react-dom/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
+    resolve: (name) => {
+        const pages = import.meta.glob<{ default: any }>('./pages/**/*.tsx', {
+            eager: true,
+        });
+
+        return pages[`./pages/${name}.tsx`];
+    },
     layout: (name) => {
         switch (true) {
             case name === 'welcome':
@@ -22,13 +30,12 @@ createInertiaApp({
                 return AppLayout;
         }
     },
-    strictMode: true,
-    withApp(app) {
-        return (
+    setup({ el, App, props }) {
+        createRoot(el).render(
             <TooltipProvider delayDuration={0}>
-                {app}
+                <App {...props} />
                 <Toaster />
-            </TooltipProvider>
+            </TooltipProvider>,
         );
     },
     progress: {

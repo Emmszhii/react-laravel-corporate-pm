@@ -1,0 +1,38 @@
+name: corporate-pm
+services:
+- name: web
+  github:
+    repo: Emmszhii/react-laravel-corporate-pm
+    branch: 2026-may5
+  build_command: |
+    composer install --no-dev --optimize-autoloader && \
+    npm ci && \
+    npm run build && \
+    php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan route:clear && \
+    php artisan view:clear
+  run_command: heroku-php-apache2 public/
+  http_port: 8080
+  envs:
+  - key: APP_ENV
+    value: production
+  - key: APP_DEBUG
+    value: "false"
+  - key: LOG_LEVEL
+    value: error
+  - key: SESSION_DRIVER
+    value: database
+  - key: CACHE_STORE
+    value: database
+  - key: QUEUE_CONNECTION
+    value: database
+  health_check:
+    http_path: /up
+  http_request_timeout: 300
+
+databases:
+- name: db
+  engine: MYSQL
+  version: "8.0"
+  production: true
